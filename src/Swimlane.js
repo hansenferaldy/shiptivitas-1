@@ -1,6 +1,8 @@
-import React from 'react';
-import Card from './Card';
-import './Swimlane.css';
+import React from "react";
+import Card from "./Card";
+import Dragula from "dragula";
+import "dragula/dist/dragula.css";
+import "./Swimlane.css";
 
 export default class Swimlane extends React.Component {
   render() {
@@ -14,14 +16,21 @@ export default class Swimlane extends React.Component {
           status={client.status}
         />
       );
-    })
+    });
+
     return (
       <div className="Swimlane-column">
         <div className="Swimlane-title">{this.props.name}</div>
-        <div className="Swimlane-dragColumn" ref={this.props.dragulaRef}>
+        <div className="Swimlane-dragColumn" ref={this.dragulaRef}>
           {cards}
         </div>
-      </div>);
+      </div>
+    );
   }
-
+  dragulaRef = componentBackingInstance => {
+    if (componentBackingInstance) {
+      let options = {};
+      Dragula([componentBackingInstance], options);
+    }
+  };
 }
